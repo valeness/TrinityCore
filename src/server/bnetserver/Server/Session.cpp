@@ -695,11 +695,11 @@ void Battlenet::Session::AsyncWrite(ServerPacket* packet)
     buffer.Write(packet->GetData(), packet->GetSize());
     delete packet;
 
-    std::unique_lock<std::mutex> guard(_writeLock);
+    std::unique_lock<std::mutex> guard(_cryptLock);
 
     _crypt.EncryptSend(buffer.GetReadPointer(), buffer.GetActiveSize());
 
-    QueuePacket(std::move(buffer), guard);
+    QueuePacket(std::move(buffer));
 }
 
 inline void ReplaceResponse(Battlenet::ServerPacket** oldResponse, Battlenet::ServerPacket* newResponse)

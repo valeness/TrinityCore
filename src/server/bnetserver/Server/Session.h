@@ -174,6 +174,7 @@ namespace Battlenet
 
         std::queue<ModuleType> _modulesWaitingForData;
 
+        std::mutex _cryptLock;
         PacketCrypt _crypt;
         bool _authed;
         bool _subscribedToRealmListUpdates;
